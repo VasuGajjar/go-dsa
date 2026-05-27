@@ -30,3 +30,12 @@ func PascalRow(r int) []int {
 	}
 	return res
 }
+
+func PascalValue(row, col int) int {
+	n, r, sum := row-1, col-1, 1
+	for i := 1; i <= r; i++ {
+		sum *= (n - i + 1)
+		sum /= i
+	}
+	return sum
+}
