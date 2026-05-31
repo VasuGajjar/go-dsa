@@ -13,5 +13,5 @@ func LowerBound(nums []int, k int) int {
 		}
 	}
 
-	return mid
+	return low
 }
