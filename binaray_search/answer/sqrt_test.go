@@ -2,6 +2,29 @@ package answer
 
 import "testing"
 
+func TestPow(t *testing.T) {
+	tests := []struct {
+		num, exp, want int
+	}{
+		{2, 0, 1},
+		{2, 1, 2},
+		{2, 10, 1024},
+		{3, 3, 27},
+		{5, 4, 625},
+		{1, 100, 1},
+		{10, 3, 1000},
+	}
+
+	for _, tt := range tests {
+		t.Run("", func(t *testing.T) {
+			got := Pow(tt.num, tt.exp)
+			if got != tt.want {
+				t.Errorf("Pow(%d, %d) = %d, want %d", tt.num, tt.exp, got, tt.want)
+			}
+		})
+	}
+}
+
 func TestSquareRoot(t *testing.T) {
 	tests := []struct {
 		name string
@@ -33,24 +56,87 @@ func TestSquareRoot(t *testing.T) {
 	}
 }
 
-func TestPow(t *testing.T) {
+func TestNthRoot(t *testing.T) {
 	tests := []struct {
-		num, exp, want int
+		name string
+		num  int
+		k    int
+		want int
 	}{
-		{2, 0, 1},
-		{2, 1, 2},
-		{2, 10, 1024},
-		{3, 3, 27},
-		{5, 4, 625},
-		{1, 100, 1},
-		{10, 3, 1000},
+		{
+			name: "perfect square",
+			num:  16,
+			k:    2,
+			want: 4,
+		},
+		{
+			name: "perfect cube",
+			num:  27,
+			k:    3,
+			want: 3,
+		},
+		{
+			name: "perfect fourth root",
+			num:  81,
+			k:    4,
+			want: 3,
+		},
+		{
+			name: "non perfect square returns floor",
+			num:  20,
+			k:    2,
+			want: 4,
+		},
+		{
+			name: "non perfect cube returns floor",
+			num:  30,
+			k:    3,
+			want: 3,
+		},
+		{
+			name: "zero",
+			num:  0,
+			k:    2,
+			want: 0,
+		},
+		{
+			name: "one square root",
+			num:  1,
+			k:    2,
+			want: 1,
+		},
+		{
+			name: "one cube root",
+			num:  1,
+			k:    3,
+			want: 1,
+		},
+		{
+			name: "root equals number",
+			num:  8,
+			k:    1,
+			want: 8,
+		},
+		{
+			name: "large perfect square",
+			num:  1000000,
+			k:    2,
+			want: 1000,
+		},
+		{
+			name: "large non perfect square",
+			num:  1000001,
+			k:    2,
+			want: 1000,
+		},
 	}
 
 	for _, tt := range tests {
-		t.Run("", func(t *testing.T) {
-			got := Pow(tt.num, tt.exp)
+		t.Run(tt.name, func(t *testing.T) {
+			got := NthRoot(tt.num, tt.k)
 			if got != tt.want {
-				t.Errorf("Pow(%d, %d) = %d, want %d", tt.num, tt.exp, got, tt.want)
+				t.Errorf("NthRoot(%d, %d) = %d, want %d",
+					tt.num, tt.k, got, tt.want)
 			}
 		})
 	}

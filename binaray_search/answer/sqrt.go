@@ -1,5 +1,23 @@
 package answer
 
+func Pow(num, exp int) int {
+	if exp <= 0 {
+		return 1
+	}
+	if exp == 1 {
+		return num
+	}
+
+	ans := Pow(num, exp/2)
+	ans *= ans
+
+	if exp%2 == 1 {
+		ans *= num
+	}
+
+	return ans
+}
+
 func SquareRoot(num int) int {
 	low, high := 0, max(1, num/2)
 
@@ -17,20 +35,19 @@ func SquareRoot(num int) int {
 	return high
 }
 
-func Pow(num, exp int) int {
-	if exp <= 0 {
-		return 1
-	}
-	if exp == 1 {
-		return num
+func NthRoot(num, k int) int {
+	low, high := 0, max(1, num/2)
+
+	for low <= high {
+		mid := (low + high) / 2
+		if val := Pow(mid, k); val == num {
+			return mid
+		} else if val < num {
+			low = mid + 1
+		} else {
+			high = mid - 1
+		}
 	}
 
-	ans := Pow(num, exp/2)
-	ans *= ans
-
-	if exp%2 == 1 {
-		ans *= num
-	}
-
-	return ans
+	return high
 }
